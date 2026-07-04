@@ -49,7 +49,7 @@ cheap to maintain.
 
 | Source | Grain | Coverage | Key fields |
 |---|---|---|---|
-| **Master Performance Marketing FY24-26** | campaign × platform × market × month (1,037 rows) | FY23-26 · 6 regions · 22 markets · 32 brands · 10 platforms · ~$2.6M spend | Budget/Spend (USD+AED), Impressions, Views (2s/3s/6s/15s), Clicks, CPM/CPC/CPV, CTR, Hook Rate (TikTok & IG), VTR, VV 25–100%, Reach, Frequency, TG |
+| **Master Performance Marketing FY24-26** — source-of-truth tabs: **`Combined Data FY 23-26`** + **`Africa Campaigns`** only (pivot tabs used solely as cross-check references, all other tabs ignored) | campaign × platform × market × month (1,037 + 47 rows) | FY23-26 · 8 regions · 26 markets (Combined: GCC→CIS→North Africa→Australia; Africa tab adds South Africa, Tanzania, Zambia, Kenya) · 32 brands · 10 platforms · ~$2.73M spend | Budget/Spend (USD+AED), Impressions, Views (2s/3s/6s/15s), Clicks, CPM/CPC/CPV, CTR, Hook Rate (TikTok & IG), VTR, VV 25–100%, Reach, Frequency, TG |
 | **Master Influencer Dashboard FY23-26** | activation (483 rows) | FY23-26 · GCC + beyond | Influencer, tier (Nano→Mega), KOL type, platform, asset type, followers, cost AED, views, watch time, interactions, CPF/CPV/CPI, ER%, boosting rights, content links |
 | **Master Social Media Tracker FY23-26** | page × month follower series | Own + competitor pages (Sunsilk, Garnier, Vaseline…), IG + TikTok, Dec'22→Jun'26 | follower counts, page URLs, region |
 | **TikTok Competition Landscape FY25-26** (Spyglass-style) | competitor × product × month, UAE/KSA | Unilever 25.8M AED · L'Oréal 17.8M · Kenvue 14.0M · P&G 4.2M · **Dabur 1.5M** (180d TikTok) | spends, impressions, views, CPM, creative language, product, parent company |
@@ -64,6 +64,10 @@ cheap to maintain.
 - **Wide/pivot-shaped sheets:** the social tracker stores months as ~40 columns;
   Creative Analysis has 4 pivot blocks pasted side-by-side with `Unnamed:` gaps.
 - **Duplicated column blocks** in the competition sheet (same data twice per row).
+- **Schema drift between the two source tabs:** `Africa Campaigns` uses
+  `Spends(USD)` vs Combined's `Spends (USD)`, lacks Fiscal Year / Budget /
+  Start–End dates / Engagements, and lowercases platforms (`facebook`). The
+  loader maps both into the same `fact_paid_media` shape.
 - **No creative registry:** hook *rate* is tracked, but hook *content* (the
   actual opening device, script, format) is not — so "which hooks work?" is
   currently unanswerable by any system.
@@ -89,7 +93,7 @@ why the pipeline is step one.
 | Table | Contents |
 |---|---|
 | `dim_brand` | brand → hero product line → category → parent company (ours *and* competitors', so SOV joins work) |
-| `dim_market` | market → region → cluster (GCC, MENA ex-GCC, North Africa, CIS/Central Asia — Uzbekistan/Kazakhstan/Kyrgyzstan/Azerbaijan, Sub-Saharan — Ethiopia, Asia — SG/MY, Australia/Fiji) |
+| `dim_market` | market → region → cluster (GCC, MENA ex-GCC, North Africa, CIS/Central Asia — Uzbekistan/Kazakhstan/Kyrgyzstan/Azerbaijan, Sub-Saharan — Ethiopia/Kenya/Tanzania/Zambia, South Africa, Asia — SG/MY, Australia/Fiji) |
 | `dim_platform` | platform → family (Meta = FB+IG, TikTok, YouTube, programmatic, local: Koora/Shahid) |
 | `dim_creative` | **the new creative/hook registry**: creative ID, hook text & type, language, format, duration, hero product, asset link |
 | `dim_influencer` | influencer → tier, KOL specialty, country, profile links, follower history |
@@ -113,6 +117,10 @@ writers/team access demand it. dbt for the transform layer when it matures.
 1. **Master workbooks (now):** Python loaders per workbook that unpivot wide
    sheets, fix serial dates, normalize vocabularies against the controlled
    lists, and load to the warehouse. Idempotent — re-drop the file, re-run.
+   For the Performance workbook only `Combined Data FY 23-26` and
+   `Africa Campaigns` are ingested; the pivot tabs (`Pivot FY 23-26`, `PT_*`,
+   `All Campaign Pivot`) are used as reconciliation checks — loader totals must
+   match the pivots before a load is accepted — and every other tab is ignored.
 2. **Monthly drops (ongoing):** a landing folder (Drive/SharePoint). New file →
    validation gate (schema check, vocab check, spend-total sanity vs last
    month) → auto-load → Slack summary of what changed. Bad rows are quarantined
