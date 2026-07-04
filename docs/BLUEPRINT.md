@@ -204,7 +204,33 @@ training required, ever.
 
 ---
 
-## 8. Operating model (the part that makes it stick)
+## 8. Gap remediation — shipped in this repo
+
+Three structural gaps identified in review are now plugged with working
+machinery (see `docs/TAXONOMY.md` for the full rules):
+
+1. **No outcome data** → `fact_outcomes` feed at brand × market × month grain.
+   Template: `templates/outcomes_monthly.csv` (sell-out value/units, market
+   share, e-commerce revenue, distribution). `tools/trends_proxy.py` automates
+   a Google Trends `search_index` per brand × market from day one as the
+   demand proxy until harder data flows.
+2. **Egypt & Turkey missing** → both added to `vocab/markets.csv` (status
+   `onboarding`). Local teams/agencies submit via
+   `templates/paid_media_submission.csv`; the validation gate returns exact
+   row-level errors so no cleanup lands centrally.
+3. **Influencer ↔ paid disconnect** → shared `asset_id`
+   (`AST-FY27-VEHO-0001`) recorded in both trackers, plus `boost_campaign_id`
+   and `boost_spend_aed` in the influencer tracker
+   (`templates/influencer_activation_v2.csv`). Blended asset cost (fee +
+   boost) and UGC-vs-brand-creative comparisons become single joins.
+
+Supporting both: structured campaign IDs
+(`FY27-Q2-VEHO-EGY-TT-AWR-001`) replace 570 free-text names, and
+`tools/validate_submission.py` enforces all of it — controlled vocabularies,
+ID formats, date parseability, CPM sanity bounds — before anything enters the
+warehouse.
+
+## 9. Operating model (the part that makes it stick)
 
 - **One taxonomy owner** — new brand/market/hook values enter through the
   controlled list, not free-typed into Excel.
