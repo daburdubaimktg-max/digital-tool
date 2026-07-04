@@ -1,0 +1,32 @@
+field,value
+objective,Awareness
+objective,Views
+objective,Impressions
+objective,Clicks
+objective,Traffic
+objective,Engagement
+objective,Completed Views
+objective,Testing
+objective,Scaling
+influencer_tier,Nano
+influencer_tier,Micro
+influencer_tier,Macro
+influencer_tier,Mega
+creative_language,Arabic
+creative_language,English
+creative_language,French
+creative_language,Russian
+creative_language,Uzbek
+creative_language,Kazakh
+creative_language,Turkish
+creative_language,Amharic
+creative_language,Swahili
+asset_source,Brand
+asset_source,Influencer UGC
+asset_source,Agency
+outcome_metric,sell_out_value_usd
+outcome_metric,sell_out_units
+outcome_metric,market_share_pct
+outcome_metric,ecom_revenue_usd
+outcome_metric,search_index
+outcome_metric,distribution_pct

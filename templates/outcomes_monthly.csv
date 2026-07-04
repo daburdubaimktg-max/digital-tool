@@ -1,0 +1,4 @@
+fiscal_year,month,brand,market,metric,value,currency,source,notes
+FY 25-26,June,Vatika Hair Oil,KSA,sell_out_value_usd,182000,USD,Distributor sell-out report,example row - replace
+FY 25-26,June,Vatika Hair Oil,KSA,search_index,74,,Google Trends (auto),example row - replace
+FY 25-26,June,Dabur Amla,Egypt,market_share_pct,12.4,,Nielsen retail audit,example row - replace

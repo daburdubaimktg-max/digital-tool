@@ -1,0 +1,29 @@
+market,market_code,region,cluster,status
+KSA,KSA,GCC,GCC,active
+UAE,UAE,GCC,GCC,active
+Kuwait,KWT,GCC,GCC,active
+Qatar,QAT,GCC,GCC,active
+Bahrain,BHR,GCC,GCC,active
+Oman,OMN,GCC,GCC,active
+Jordan,JOR,Middle East (Excluding GCC),Levant,active
+Yemen,YEM,Middle East (Excluding GCC),Levant,active
+Iraq,IRQ,Iraq,Iraq,active
+Egypt,EGY,North Africa,North Africa,onboarding
+Morocco,MAR,North Africa,North Africa,active
+Algeria,DZA,North Africa,North Africa,active
+Tunisia,TUN,North Africa,North Africa,active
+Libya,LBY,North Africa,North Africa,active
+Turkey,TUR,Turkey,Turkey,onboarding
+Uzbekistan,UZB,Emerging Markets,CIS / Central Asia,active
+Kazakhstan,KAZ,Emerging Markets,CIS / Central Asia,active
+Kyrgyzstan,KGZ,Emerging Markets,CIS / Central Asia,active
+Azerbaijan,AZE,Emerging Markets,CIS / Central Asia,active
+Ethiopia,ETH,Emerging Markets,Sub-Saharan Africa,active
+Kenya,KEN,East Africa,Sub-Saharan Africa,active
+Tanzania,TZA,East Africa,Sub-Saharan Africa,active
+Zambia,ZMB,East Africa,Sub-Saharan Africa,active
+South Africa,ZAF,South Africa,Sub-Saharan Africa,active
+Singapore,SGP,Emerging Markets,Asia,active
+Malaysia,MYS,Emerging Markets,Asia,active
+Australia,AUS,Australia,Australia & Pacific,active
+Fiji,FJI,Australia,Australia & Pacific,active
